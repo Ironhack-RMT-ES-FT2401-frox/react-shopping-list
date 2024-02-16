@@ -12,6 +12,6 @@
   {
     "name": "salt",
     "price": 0.4,
-    "isPurchased": false
+    "isPurchased": true
   }
 ]

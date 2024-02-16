@@ -7,10 +7,21 @@ import testProducts from "../assets/data/testProducts.json";
 
 import { useState } from "react";
 
+// Componentes estilizado de Bootstrap
+import Button from 'react-bootstrap/Button';
+import { Collapse } from "react-bootstrap";
+
 function ShoppingList() {
 
   const [ allProducts, setAllProducts ] = useState(testProducts) 
   // initial state. change to empty array when done with add functionality
+
+  const [ isAddFormShowing, setIsAddFormShowing ] = useState(false)
+
+  const handleToggleAddForm = () => {
+
+    setIsAddFormShowing(!isAddFormShowing) // invierte el valor booleano del estado
+  }
 
   return (
     <div>
@@ -18,16 +29,36 @@ function ShoppingList() {
       <h1>Shopping List</h1>
 
       {/* all elements of the shopping list will be here */}
+
+      <Button 
+      variant="outline-info" 
+      size="lg"
+      onClick={ handleToggleAddForm }
+        >Ver Formulario de Añadir</Button>
+
+      {/* { isAddFormShowing === true ? <AddForm 
+        setAllProducts={setAllProducts}
+        // allProducts={allProducts}
+        // setIsAddFormShowing={setIsAddFormShowing}
+      /> : null } */}
+
+      <Collapse in={isAddFormShowing}>
+        <div>
+          <AddForm 
+            setAllProducts={setAllProducts}
+            // allProducts={allProducts}
+            // setIsAddFormShowing={setIsAddFormShowing}
+          />
+        </div>
+      </Collapse>
       
-      {allProducts.map((eachProduct) => {
-        return (
-          <div className="product-card">
-            <h3>{eachProduct.name}</h3>
-            <p><b>Price:</b> {eachProduct.price}€</p>
-            <p>{eachProduct.isPurchased === true ? "✅ Purchased" : "🟡 Pending"}</p>
-          </div>
-        )
-      })}
+
+
+      <ProductList 
+        allProducts={allProducts} 
+        setAllProducts={setAllProducts}
+      />
+      
 
     </div>
   )
